@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en" ng-app="eventsApp">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="lib/angular/angular.min.js"></script>
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/app.css">
+	<link rel="stylesheet" href="css/bootstrap-theme.min.css">
+
+	<script type="text/javascript"
+	src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+</head>
+<body ng-cloak>
+	<div class="container">
+		<div class="navbar">
+			<div class="navbar-inner">
+				<ul class="nav">
+					<li><a href="EventDetails.html">Event Details</a></li>
+					<li><a href="NewEvent.html">Create new event</a></li>
+				</ul>
+			</div>
+		</div>
+
+		<div ng-controller="EventController">
+			<img ng-src="{{event.imageUrl}}">
+			<div class="row">
+				<div class="span11">
+					<h2 ng-bind-template="{{event.name | uppercase}} {{event.date}}"></h2>			
+				</div>
+				<div ng-bind-html="snippet">some title</div>
+
+				<div class="span4">
+					<div><strong>Date: </strong>{{ event.date | date:'mediumDate'}}</div>
+					<div><strong>Time: </strong>{{ event.time}}</div>
+					<div><strong>Price: </strong>{{ 34 | currency}}</div>
+
+				</div>
+				<div class="span4">
+					<address>
+						<strong>Address</strong><br>
+						{{event.location.address}}<br>
+						{{event.location.city}}<br>
+						{{event.location.province}}
+					</address>
+				</div>
+			</div>
+			<hr>
+			<h3>Sessions</h3>
+			
+			Order by:
+			<select ng-model="sortorder "class="input small"> 
+				<option selected value="name">Name</option>
+				<option selected value="-upVoteCount">Votes</option>
+			</select>
+			
+			Show:
+			<select ng-model="query.level" class="input-medium">	
+				<option selected value="">All</option>
+				<option selected value="introductory">introductory</option>
+				<option selected value="intermediate">intermediate</option>
+				<option selected value="advanced">advanced</option>
+			</select>
+			
+			<ul class="thumbnails">
+				<li ng-repeat="sessions in event.sessions | orderBy:sortorder | filter:query" style="border:1px solid black; padding:20px 20px 20px 0px; box-sizing:border-box;">
+					<div class="span0  votingWidget">
+						<div class="votingButton">
+							<i class="icon-chevron-up" ng-click="UpVoteSession(sessions)"></i>
+						</div>	
+						<div class="badge badge-inverse">
+							<div>{{sessions.upVoteCount}}</div>	
+						</div>
+						<div class="votingButton">
+							<i class="icon-chevron-down" ng-click="downVoteSession(sessions)"></i>
+						</div>
+					</div>
+					<h4 class="well-title">{{sessions.name}}</h4>
+					<p>Duration: {{sessions.duration | durations}}</p>
+					<p style="margin-left:45px;">level: {{sessions.level}}</p>
+					<p style="margin-left:45px;">abstract: {{sessions.abstract}}</p>
+				</li>
+			</ul>
+			<hr>
+
+			<div>
+				<button ng-disabled="buttonDisabled" class="btn">Disabled</button>
+			</div>
+			<hr>
+			<div>		
+				<br>
+				<h2 ng-style="mystyle" ng-bind-template="{{event.name}} {{event.date}}"></h2>
+				<h2 ng-class="myclass" ng-bind-template="{{event.name}} {{event.date}}"></h2>			
+			</div>
+			<hr>
+			<div>
+				<h2 ng-show="boolValue">Show this</h2>
+				<h2 ng-hide="boolValue">Hide this</h2>
+			</div>
+			<hr>
+			<div>
+				<div ng-non-bindable>{{1 + 2}}</div>
+				<div>{{1 + 2}}</div>
+			</div>
+			<hr>
+			<div>
+				{{'hello' + ' world'}}<br>
+				{{ [1,2,3] [2]}}
+			</div>
+			<hr>
+			<div>
+				{{3.1415926535 | number:2}}
+				{{3 | number:2 }}
+			</div>
+			<hr>
+			<div>
+				{{ {a:3, b:'hi', c:{aa:35} } | json }}
+			</div>
+
+			<hr>
+			<ul class="thumbnails">
+				<li ng-repeat="sessions in event.sessions | orderBy:sortorder | limitTo:1" style="border:1px solid black; padding:20px 20px 20px 0px; box-sizing:border-box;">
+					<div class="span0  votingWidget">
+						<div class="votingButton">
+							<i class="icon-chevron-up" ng-click="UpVoteSession(sessions)"></i>
+						</div>	
+						<div class="badge badge-inverse">
+							<div>{{sessions.upVoteCount}}</div>	
+						</div>
+						<div class="votingButton">
+							<i class="icon-chevron-down" ng-click="downVoteSession(sessions)"></i>
+						</div>
+					</div>
+					<h4 class="well-title">{{sessions.name}}</h4>
+					<p>Duration: {{sessions.duration | durations }}</p>
+					<p style="margin-left:45px;">level: {{sessions.level}}</p>
+					<p style="margin-left:45px;">abstract: {{sessions.abstract}}</p>
+				</li>
+			</ul>
+			<hr>
+
+
+		</div>
+	</div>
+	<script src="lib/angular/angular-sanitize.js"></script>
+	<script src="js/app.js"></script>
+	<script src="js/filters.js"></script>
+	<script src="js/controllers/EventController.js"></script>
+</body>
+</html>
+

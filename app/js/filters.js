@@ -1,10 +1,16 @@
 'use strict';
 
-/* Filters */
-
-angular.module('myApp.filters', []).
-  filter('interpolate', ['version', function(version) {
-    return function(text) {
-      return String(text).replace(/\%VERSION\%/mg, version);
-    }
-  }]);
+eventsApp.filter('durations', function() {
+	return function(duration) {
+		switch(duration) {
+			case 1:
+				return "Half hour";
+			case 2:
+				return "1 hour";
+			case 3:
+				return "Full day";
+			case 4:
+				return "Months";
+		}
+	}
+})
